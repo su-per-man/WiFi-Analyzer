@@ -1,2 +1,3 @@
-const message = 'Hello, world!';
-console.log(message);
+const si = require('systeminformation');
+
+si.wifiNetworks().then((data) => console.log(data));
