@@ -9,7 +9,6 @@
   "private": true,
   "devDependencies": {
     "@types/node": "^17.0.45",
-    "prettier": "^2.5.1",
     "typescript": "^4.6.2"
   },
   "scripts": {
@@ -18,6 +17,7 @@
     "dev": "tsc -W"
   },
   "dependencies": {
+    "express": "^4.18.2",
     "node-wifi": "^2.0.16",
     "systeminformation": "^5.12.6"
   }
