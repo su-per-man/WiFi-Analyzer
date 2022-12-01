@@ -17,6 +17,7 @@
     "dev": "tsc -W"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "node-wifi": "^2.0.16",
     "systeminformation": "^5.12.6"
