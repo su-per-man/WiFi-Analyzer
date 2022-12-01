@@ -24,7 +24,8 @@ import ListItemText from "@mui/material/ListItemText";
 import { styled, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import * as React from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { ReactInternetSpeedMeter } from "react-internet-meter";
 
 const drawerWidth = 240;
@@ -78,11 +79,22 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
+interface IwifiData {
+  ssid?: string;
+  bssid?: string;
+  channel?: string;
+  security?: string;
+  frequency?: string;
+  signalLevel?: string;
+  quality?: string;
+}
+
 export default function Home() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
-  const [active, setActive] = React.useState(0);
-  const [wifiSpeed, setwifiSpeed] = React.useState("Checking ... ");
+  const [open, setOpen] = useState(true);
+  const [active, setActive] = useState(0);
+  const [wifiSpeed, setwifiSpeed] = useState("Checking ... ");
+  const [wifiData, setWifiData] = useState<IwifiData>({});
   const downloadItems = [
     "ground.jpg",
     "first.jpg",
@@ -91,7 +103,9 @@ export default function Home() {
     "fourth.jpg",
     "map.jpg",
   ];
-
+  useEffect(() => {
+    axios.get("http://localhost:3001/info").then((d) => setWifiData(d.data[0]));
+  }, []);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -184,16 +198,16 @@ export default function Home() {
                   <CardContent>
                     <Wifi fontSize="large" style={{ color: "white" }} />
                     <Typography variant="body1" color={"white"}>
-                      SSID: CSUWireless
+                      SSID: {wifiData.ssid}
                     </Typography>
                     <Typography variant="body1" color={"white"}>
-                      BSSID: 60:db:98:8b:9f:f7
+                      BSSID: {wifiData.bssid}
                     </Typography>
                     <Typography variant="body1" color={"white"}>
-                      Channel: 149
+                      Channel: {wifiData.channel}
                     </Typography>
                     <Typography variant="body1" color={"white"}>
-                      Security: WPA2-Personal
+                      Security: {wifiData.security}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -210,13 +224,13 @@ export default function Home() {
                   <CardContent>
                     <Speed fontSize="large" style={{ color: "white" }} />
                     <Typography variant="body1" color={"white"}>
-                      Frequency: 5745
+                      Frequency: {wifiData.frequency}
                     </Typography>
                     <Typography variant="body1" color={"white"}>
-                      Signal Level: -56
+                      Signal Level: {wifiData.signalLevel}
                     </Typography>
                     <Typography variant="body1" color={"white"}>
-                      Quality: 88
+                      Quality: {wifiData.quality}
                     </Typography>
                     <ReactInternetSpeedMeter
                       txtMainHeading={
